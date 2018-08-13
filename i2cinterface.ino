@@ -1,7 +1,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
-#include <Wire.h>
 #define sla_w 0xD0
 #define sla_r 0xD1
 void led_config(void)
@@ -134,26 +133,14 @@ void initialise(void)
   
   twi_start();
   twi_writeaddr(sla_w);
+  twi_writeaddr(0x68);
+  twi_writedata(0x00);
+  twi_stop();
+  
+  twi_start();
+  twi_writeaddr(sla_w);
   twi_writeaddr(0x6B);
-  twi_writedata(0x00);
-  twi_stop();
-  
-  twi_start();
-  twi_writeaddr(sla_w);
-  twi_writeaddr(0x19);
-  twi_writedata(0x07);
-  twi_stop();
-  
-  twi_start();
-  twi_writeaddr(sla_w);
-  twi_writeaddr(0x6C);
   twi_writedata(0x01);
-  twi_stop();
-  
-  twi_start();
-  twi_writeaddr(sla_w);
-  twi_writeaddr(0x1A);
-  twi_writedata(0x00);
   twi_stop();
   
   twi_start();
@@ -168,11 +155,6 @@ void initialise(void)
   twi_writedata(0x10);
   twi_stop();
 
-  twi_start();
-  twi_writeaddr(sla_w);
-  twi_writeaddr(0x38);
-  twi_writedata(0x01);
-  twi_stop();
 }
 void setup() {
   // put your setup code here, to run once:
@@ -210,7 +192,7 @@ void loop() {
  gx = gyroX/32.8;
  gy = gyroY/32.8;
  gz = gyroZ/32.8;
- Serial.print(ax);
+ /*Serial.print(ax);
  Serial.print('\t');
  Serial.print(ay);
  Serial.print('\t');
@@ -218,7 +200,8 @@ void loop() {
  Serial.print('\t');
  Serial.print(gx);
  Serial.print('\t');
- Serial.print(gy);
+ Serial.print(gy);*/
+ Serial.print(t);
  Serial.println();
 }
  
